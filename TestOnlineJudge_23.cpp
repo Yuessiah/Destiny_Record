@@ -26,4 +26,4 @@ void solve(int N, int order[])
 			if(t2 == -1) ok = 0;
 		}
 	}
-}
+} 
