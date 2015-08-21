@@ -65,6 +65,6 @@ int main()
 			free(map[x]);
 		}
 	}
-	printall(leader->back);
+	printall(leader->back); 
 	return 0;
 }
