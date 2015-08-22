@@ -1,31 +1,28 @@
 #include<stdio.h>
-char bb[1<<15][17];
-
+const int maxn = 1000000;
 int main()
 {
-	bb[0][0] = bb[0][1] = 'O';
-	int l = 1, w = 2;
-	printf("O\n\n");
-	printf("O\nO\n");
-
-	int T = 15;
+	int T, n, s[maxn], a[maxn];
+	scanf("%d", &T);
 	while(T--) {
-		putchar('\n');
-		for(int i = 0; i < l; i++)
-			for(int j = 0; j < w; j++) {
-				bb[l+i][j+1] = bb[i][j];
-			}
-		l *= 2; w++;
+		int top = -1;
+		scanf("%d", &n);
+		for(int i = 0; i < n; i++) scanf("%d", &a[i]);
 
-		int x = l;
-		for(int i = w-1; i >= 0; i--, x/=2) {
-			for(int j = l-1; j >= 0; j--) {
-				if(j == x-2) break;
-				if(bb[j][i] != 'O') putchar('.');
-				else putchar('O');
+		int cnt = 0;
+		while(n--) {
+			if(top == -1) s[++top] = a[n];
+			else {
+				for(int i = top; i >= 0; i--) {
+					if(s[i] < a[n]) top--;
+					cnt++;
+					if(s[i] > a[n]) break;
+				} 
+
+				s[++top] = a[n];
 			}
-			putchar('\n');
 		}
+		printf("%d\n", cnt);
 	}
 	return 0;
 }
