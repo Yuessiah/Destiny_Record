@@ -28,5 +28,6 @@ int main()
 				if(map[i][j] == '.') { ++cnt; dfs(i, j); }
 		printf("%d\n", cnt);
 	}
+	
 	return 0;
 }
