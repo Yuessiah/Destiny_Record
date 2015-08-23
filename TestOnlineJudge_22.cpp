@@ -24,5 +24,6 @@ int main()
 		}
 		printf("%d\n", cnt);
 	}
+	
 	return 0;
 }
