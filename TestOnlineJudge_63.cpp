@@ -29,6 +29,6 @@ int main()
 		for(int i = 0; i < k; i++) scanf("%d", &lucky[i]);
 		dfs(0, -1);
 	}
-
+ 
 	return 0;
 }
