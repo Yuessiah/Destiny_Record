@@ -17,13 +17,13 @@ int main()
 					if(s[i] < a[n]) top--;
 					cnt++;
 					if(s[i] > a[n]) break;
-				} 
+				}
 
 				s[++top] = a[n];
 			}
 		}
 		printf("%d\n", cnt);
 	}
-	
+
 	return 0;
 }
