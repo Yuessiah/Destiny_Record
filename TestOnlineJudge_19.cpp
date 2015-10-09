@@ -17,5 +17,6 @@ int main()
 		top != -1 ? printf("No") : printf("Yes");
 		putchar('\n');
 	}
+	
 	return 0;
 }
