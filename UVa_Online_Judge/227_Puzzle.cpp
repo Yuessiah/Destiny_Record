@@ -11,7 +11,10 @@ struct blank {
 void printResult()
 {
 	for(int r = 1; r <= 5; r++) {
-		for(int c = 1; c <= 5; c++) printf("%c ", puzzle[r][c]);
+		for(int c = 1; c <= 5; c++) {
+			printf("%c", puzzle[r][c]);
+			if(c < 5) putchar(' ');
+		}
 		putchar('\n');
 	}
 }
