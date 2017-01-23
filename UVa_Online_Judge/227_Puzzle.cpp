@@ -8,18 +8,30 @@ struct blank {
 	int r, c; //row, col
 }b;
 
+void printResult()
+{
+	for(int r = 1; r <= 5; r++) {
+		for(int c = 1; c <= 5; c++) {
+			printf("%c", puzzle[r][c]);
+			if(c < 5) putchar(' ');
+		}
+		if(r < 5) putchar('\n');
+	}
+}
+
 int main()
 {
 	int kase = 0;
 	while(1) {
 		for(int r = 1; r <= 5; r++) {
-			fgets(puzzle[r]+1, 7, stdin);
-			if(puzzle[r][1] == 'Z') return 0;
-
-			for(int c = 1; c <= 5; c++) if(puzzle[r][c] == ' ') {
-				b.r = r;
-				b.c = c;
+			for(int c = 1; c <= 5; c++) {
+				puzzle[r][c] = getchar();
+				if(puzzle[r][c] == ' ') {
+					b.r = r;
+					b.c = c;
+				}
 			}
+			getchar();
 		}
 
 		char op;
@@ -38,13 +50,12 @@ int main()
 			swap(puzzle[newr][newc], puzzle[r][c]);
 			b.r = newr; b.c = newc;
 		}
+		getchar();
 
-		printf("Puzlle #%d:\n", ++kase);
-		if(illegal) puts("This puzzle has no final configuration.");
-		else for(int r = 1; r <= 5; r++) {
-			for(int c = 1; c <= 5; c++) printf("%c ", puzzle[r][c]);
-			putchar('\n');
-		}
+		if(kase) putchar('\n');
+		printf("Puzzle #%d:\n", ++kase);
+		if(illegal) printf("This puzzle has no final configuration.");
+		else printResult();
 	}
 
 	return 0;
