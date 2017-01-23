@@ -14,9 +14,10 @@ int line;
 void printResult()
 {
 	for(int i = 0; i < line; i++) {
-		for(int j = 0; j < context[i].size(); j++) {
-			printf("%-*s", maxLength[j], context[i][j].c_str());
-			if(j < context[i].size()) putchar(' ');
+		int sz = context[i].size();
+		for(int j = 0; j < sz; j++) {
+			int len = (j<sz-1)? maxLength[j]+1 : 0;
+			printf("%-*s", len, context[i][j].c_str());
 		}
 		cout << endl;
 	}
