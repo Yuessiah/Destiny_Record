@@ -11,11 +11,8 @@ struct blank {
 void printResult()
 {
 	for(int r = 1; r <= 5; r++) {
-		for(int c = 1; c <= 5; c++) {
-			printf("%c", puzzle[r][c]);
-			if(c < 5) putchar(' ');
-		}
-		if(r < 5) putchar('\n');
+		for(int c = 1; c <= 5; c++) printf("%c ", puzzle[r][c]);
+		putchar('\n');
 	}
 }
 
@@ -53,9 +50,8 @@ int main()
 		}
 		getchar();
 
-		if(kase) putchar('\n');
 		printf("Puzzle #%d:\n", ++kase);
-		if(illegal) printf("This puzzle has no final configuration.");
+		if(illegal) puts("This puzzle has no final configuration.");
 		else printResult();
 	}
 
