@@ -39,10 +39,21 @@ int main()
 
 			int r = b.r, c = b.c;
 			int newr, newc;
-			if(op == 'A') { newr = r-1; newc = c; }
-			if(op == 'B') { newr = r+1; newc = c; }
-			if(op == 'R') { newr = r; newc = c+1; }
-			if(op == 'L') { newr = r; newc = c-1; }
+			switch(op) {
+				case 'A':
+					newr = r-1; newc = c;
+					break;
+				case 'B':
+					newr = r+1; newc = c;
+					break;
+				case 'R':
+					newr = r; newc = c+1;
+					break;
+				case 'L':
+					newr = r; newc = c-1;
+					break;
+				default: illegal = 1;
+			}
 			if(newr < 1 || newr > 5 || newc < 1 || newc > 5) { illegal = 1; continue; }
 
 			swap(puzzle[newr][newc], puzzle[r][c]);
@@ -53,6 +64,7 @@ int main()
 		printf("Puzzle #%d:\n", ++kase);
 		if(illegal) puts("This puzzle has no final configuration.");
 		else printResult();
+		putchar('\n');
 	}
 
 	return 0;
