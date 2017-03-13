@@ -37,8 +37,8 @@ int main()
 		if(count > 1) printf("%d carry operations.", count);
 		putchar('\n');
 
-//		memset(a, 0, sizeof(a));
-//		memset(b, 0, sizeof(b));
+		memset(a, 0, sizeof(a));
+		memset(b, 0, sizeof(b));
 	}
 
 	return 0;
