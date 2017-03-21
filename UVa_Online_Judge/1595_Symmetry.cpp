@@ -4,7 +4,7 @@
 #include<algorithm>
 using namespace std;
 
-const int maxr = 10000;
+const int maxr = 10000; //maximum of range.
 
 int n;
 
