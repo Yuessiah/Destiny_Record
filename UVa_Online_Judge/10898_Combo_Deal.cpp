@@ -5,7 +5,7 @@ using std::min;
 const int maxi = 6 + 5, maxc = 8 + 5, maxo = 9 + 5;
 
 int I, need[maxi], dp[maxo][maxo][maxo][maxo][maxo][maxo];
-int n_c, n_o, o_max, c_max;
+int n_c, n_o;
 
 struct combos {
 	int list[maxi];
@@ -53,19 +53,15 @@ int main()
 		}
 
 		/*
-		for(int i = 0; i < n_c; i++) {
-			for(int j = 0; j < I; j++) printf("%d ", combo[i].list[j]);
-			printf("%d\n", combo[i].price);
-		}
-		*/
+			 for(int i = 0; i < n_c; i++) {
+			 for(int j = 0; j < I; j++) printf("%d ", combo[i].list[j]);
+			 printf("%d\n", combo[i].price);
+			 }
+			 */
 
 		scanf("%d", &n_o);
 		for(int i = 0; i < n_o; i++) {
-			o_max = 0;
-			for(int j = 0; j < I; j++) {
-				scanf("%d", &need[j]);
-				if(need[j] > o_max) o_max = need[j];
-			}
+			for(int j = 0; j < I; j++) scanf("%d", &need[j]);
 			printf("%d\n", solve());
 		}
 	}
