@@ -14,11 +14,8 @@ void solve(char s[maxn])
 		pi[i] = cur;
 	}
 
-	/*
-		 for(int i = 0; i < m; i++) printf("%d ", pi[i]);
-		 putchar('\n');
-	 */
-	printf("%d\n", m/(m-cur-1));
+	if(m%(m-cur-1)) puts("1");
+	else printf("%d\n", m/(m-cur-1));
 }
 
 int main()
