@@ -8,7 +8,7 @@ using namespace std;
 const int maxn = 100 + 10;
 
 int n, t;
-int dfn[maxn], low[maxn], G[maxn][maxn], count;
+int dfn[maxn], low[maxn], G[maxn][maxn];
 set<int> AP;
 
 void init() {
