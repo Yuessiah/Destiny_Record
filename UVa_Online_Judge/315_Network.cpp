@@ -7,7 +7,7 @@ using namespace std;
 const int maxn = 100 + 10;
 
 int n, t;
-int dfn[maxn], low[maxn], G[maxn][maxn];
+int dfn[maxn], top[maxn], G[maxn][maxn];
 set<int> AP;
 
 void init() {
@@ -18,16 +18,16 @@ void init() {
 }
 
 void dfs(int prev, int cur) {
-	dfn[cur] = low[cur] = ++t;
+	dfn[cur] = top[cur] = ++t;
 	int child = 0;
 
 	for(int nxt = 1; nxt <= n; nxt++) if(G[cur][nxt] && nxt != prev) {
 		if(!dfn[nxt]) {
 			child++;
 			dfs(cur, nxt);
-			if(dfn[cur] != 1 && low[nxt] >= dfn[cur]) AP.insert(cur);
-			else low[cur] = min(low[cur], low[nxt]);
-		} else low[cur] = min(low[cur], dfn[nxt]);
+			if(dfn[cur] != 1 && top[nxt] >= dfn[cur]) AP.insert(cur);
+			else top[cur] = min(top[cur], top[nxt]);
+		} else top[cur] = min(top[cur], dfn[nxt]);
 	}
 
 	if(dfn[cur] == 1 && child > 1) AP.insert(cur);
