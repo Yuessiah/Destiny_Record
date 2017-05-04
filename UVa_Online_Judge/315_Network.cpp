@@ -1,7 +1,6 @@
 #include<cstdio>
 #include<cstring>
 #include<algorithm>
-#include<vector>
 #include<set>
 using namespace std;
 
@@ -26,8 +25,8 @@ void dfs(int prev, int cur) {
 		if(!dfn[nxt]) {
 			child++;
 			dfs(cur, nxt);
-			low[cur] = min(low[cur], low[nxt]);
 			if(dfn[cur] != 1 && low[nxt] >= dfn[cur]) AP.insert(cur);
+			else low[cur] = min(low[cur], low[nxt]);
 		} else low[cur] = min(low[cur], dfn[nxt]);
 	}
 
