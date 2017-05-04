@@ -6,35 +6,34 @@ using namespace std;
 
 const int maxn = 100 + 10;
 
-int n, t;
-int dfn[maxn], top[maxn], G[maxn][maxn];
+int n;
+int lvl[maxn], top[maxn], G[maxn][maxn];
 set<int> AP;
 
 void init() {
-	t = 0;
-	memset(dfn, 0, sizeof(dfn));
+	memset(lvl, 0, sizeof(lvl));
 	memset(G, 0, sizeof(G));
 	AP.clear();
 }
 
-void dfs(int prev, int cur) {
-	dfn[cur] = top[cur] = ++t;
+void dfs(int prev, int cur, int dep) {
+	lvl[cur] = top[cur] = dep;
 	int child = 0;
 
 	for(int nxt = 1; nxt <= n; nxt++) if(G[cur][nxt] && nxt != prev) {
-		if(!dfn[nxt]) {
+		if(!lvl[nxt]) {
 			child++;
-			dfs(cur, nxt);
-			if(dfn[cur] != 1 && top[nxt] >= dfn[cur]) AP.insert(cur);
+			dfs(cur, nxt, dep+1);
+			if(lvl[cur] != 1 && top[nxt] >= lvl[cur]) AP.insert(cur);
 			else top[cur] = min(top[cur], top[nxt]);
-		} else top[cur] = min(top[cur], dfn[nxt]);
+		} else top[cur] = min(top[cur], lvl[nxt]);
 	}
 
-	if(dfn[cur] == 1 && child > 1) AP.insert(cur);
+	if(lvl[cur] == 1 && child > 1) AP.insert(cur);
 }
 
 void find_AP() {
-	for(int i = 1; i <= n; i++) if(!dfn[i]) dfs(i, i);
+	for(int i = 1; i <= n; i++) if(!lvl[i]) dfs(i, i, 1);
 }
 
 int main()
