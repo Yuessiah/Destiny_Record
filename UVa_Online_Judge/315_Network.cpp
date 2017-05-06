@@ -47,7 +47,7 @@ int main()
 			while(scanf(" %d%c", &v, &c) && (G[u][v] = G[v][u] = 1) && c != '\n');
 
 		find_AP();
-		printf("%d\n", AP.size());
+		printf("%d\n", (int)AP.size());
 	}
 
 	return 0;

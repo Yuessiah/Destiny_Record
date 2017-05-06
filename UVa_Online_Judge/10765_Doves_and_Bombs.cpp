@@ -8,6 +8,12 @@ const int maxn = 1e4 + 100;
 int n, m, G[maxn][maxn], top[maxn], lvl[maxn];
 map<int, int> AP;
 
+void init() {
+	memset(lvl, 0, sizeof(lvl));
+	memset(G, 0, sizeof(G));
+	AP.clear();
+}
+
 void dfs(int prev, int cur) {
 	top[cur] = lvl[cur] = lvl[prev] + 1;
 	int child = 0;
@@ -28,17 +34,19 @@ void dfs(int prev, int cur) {
 }
 
 void find_AP() {
-	for(int u = 0; u < n; u++) if(!top[u]) dfs(u, u);
+	for(int u = 0; u < n; u++) if(!lvl[u]) dfs(u, u);
 }
 
 int main()
 {
 	while(~scanf("%d%d", &n, &m) && (n || m)) {
+		init();
+
 		int u, v;
-		while(m-- && scanf("%d%d", &u, &v) && (G[u][v] = G[v][u] = 1));
+		while(scanf("%d%d", &u, &v) && (~u || ~v)) G[u][v] = G[v][u] = 1;
 
 		find_AP();
-		for(auto it = AP.begin(); it != AP.end(); it++) printf("%d %d\n", (*it).first, (*it).second);
+		//for(auto it = AP.begin(); it != AP.end(); it++) printf("%d %d\n", (*it).first, (*it).second);
 	}
 
 	return 0;
