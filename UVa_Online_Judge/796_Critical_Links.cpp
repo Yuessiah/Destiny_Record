@@ -16,12 +16,12 @@ void init() {
 	memset(G, 0, sizeof(G));
 }
 
-void dfs(int prev, int cur, int dep) {
-	lvl[cur] = top[cur] = dep;
+void dfs(int prev, int cur) {
+	lvl[cur] = top[cur] = lvl[prev] + 1;
 
 	for(int nxt = 0; nxt < n; nxt++) if(G[cur][nxt] && nxt != prev) {
 		if(!lvl[nxt]) {
-			dfs(cur, nxt, dep+1);
+			dfs(cur, nxt);
 			if(top[nxt] > lvl[cur]) BG.push_back(make_pair(min(cur, nxt), max(cur, nxt)));
 			else top[cur] = min(top[cur], top[nxt]);
 		} else top[cur] = min(top[cur], lvl[nxt]);
@@ -29,7 +29,7 @@ void dfs(int prev, int cur, int dep) {
 }
 
 void find_BG() {
-	for(int i = 0; i < n; i++) if(!lvl[i]) dfs(i, i, 1);
+	for(int i = 0; i < n; i++) if(!lvl[i]) dfs(i, i);
 }
 
 int main()
