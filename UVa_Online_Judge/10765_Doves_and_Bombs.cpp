@@ -1,17 +1,23 @@
 #include<cstdio>
 #include<cstring>
-#include<map>
+#include<algorithm>
+#include<vector>
 using namespace std;
 
 const int maxn = 1e4 + 100;
 
-int n, m, G[maxn][maxn], top[maxn], lvl[maxn];
-map<int, int> AP;
+struct place {
+	int s, p; //station, pigeon
+	place(int s=0, int p=0): s(s), p(p){}
+}P[maxn];
+
+int n, m;
+int G[maxn][maxn], top[maxn], lvl[maxn];
 
 void init() {
 	memset(lvl, 0, sizeof(lvl));
 	memset(G, 0, sizeof(G));
-	AP.clear();
+	for(int i = 0; i < n; i++) P[i] = place(i, 1);
 }
 
 void dfs(int prev, int cur) {
@@ -23,17 +29,19 @@ void dfs(int prev, int cur) {
 			child++;
 			dfs(cur, nxt);
 			top[cur] = min(top[cur], top[nxt]);
-			if(lvl[cur] != 1 && top[nxt] >= lvl[cur]) {
-				if(AP.count(cur)) AP[cur]++;
-				else AP[cur] = 1;
-			}
+			if(lvl[cur] != 1 && top[nxt] >= lvl[cur]) P[cur].p++;
 		} else top[cur] = min(top[cur], lvl[nxt]);
 	}
 
-	if(lvl[cur] == 1 && child > 1) AP[cur] = 1;
+	if(lvl[cur] == 1 && child > 1) P[cur].p = child;
 }
 
-void find_AP() {
+bool cmp(const place& a, const place& b) {
+	if(a.p == b.p) return a.s < b.s;
+	return a.p > b.p;
+}
+
+void pigeon_count() {
 	for(int u = 0; u < n; u++) if(!lvl[u]) dfs(u, u);
 }
 
@@ -45,8 +53,10 @@ int main()
 		int u, v;
 		while(scanf("%d%d", &u, &v) && (~u || ~v)) G[u][v] = G[v][u] = 1;
 
-		find_AP();
-		//for(auto it = AP.begin(); it != AP.end(); it++) printf("%d %d\n", (*it).first, (*it).second);
+		pigeon_count();
+		sort(P, P+n, cmp);
+		for(int i = 0; i < m; i++) printf("%d %d\n", P[i].s, P[i].p);
+		putchar('\n');
 	}
 
 	return 0;
