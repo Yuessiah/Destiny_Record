@@ -35,7 +35,7 @@ int main()
 	}
 
 	int len = path.size();
-	printf("%d\n%d\n", path[len-1].d, len);
+	printf("%d\n%d\n", path[len-1].d, N-1);
 	for(int i = 0; i < len; i++) printf("%d %d\n", path[i].a, path[i].b);
 
 	return 0;

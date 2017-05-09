@@ -11,9 +11,9 @@ struct coordinate {
 }C[maxp];
 
 struct edge {
-	int u, v;
+	int a, b;
 	double d;
-	edge(int u=0, int v=0, double d=0): u(u), v(v), d(d){}
+	edge(int a=0, int b=0, double d=0): a(a), b(b), d(d){}
 }E[(1+maxp)*(maxp>>1)];
 
 vector<double> D;
@@ -51,19 +51,15 @@ int main()
 			group[i] = i;
 
 			scanf("%lf%lf", &C[i].x, &C[i].y);
-			for(int j = 0; j < i; j++) {
-				E[k++] = edge(i, j, dist(C[i].x, C[i].y, C[j].x, C[j].y));
-				E[k++] = edge(j, i, dist(C[i].x, C[i].y, C[j].x, C[j].y));
-			}
+			for(int j = 0; j < i; j++) E[k++] = edge(j, i, dist(C[i].x, C[i].y, C[j].x, C[j].y));
 		}
 
 		sort(E, E+k, cmp);
-		for(int i = 0; i < k; i++) if(find_set(E[i].u) != find_set(E[i].v)) {
-			union_set(E[i].u, E[i].v);
+		for(int i = 0; i < k; i++) if(find_set(E[i].a) != find_set(E[i].b)) {
+			union_set(E[i].a, E[i].b);
 			D.push_back(E[i].d);
 		}
 		reverse(D.rbegin(), D.rend());
-		//for(int i = 0; i < D.size(); i++) printf("%.2lf ", D[i]);
 		printf("%.2lf\n", D[S-1]);
 	}
 
