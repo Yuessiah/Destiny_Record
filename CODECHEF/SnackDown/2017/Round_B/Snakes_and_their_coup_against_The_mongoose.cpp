@@ -50,7 +50,7 @@ int main()
 		} else {
 			if(hor[0]) for(int i = 0; i < n; i++) if(c[0][i] == '*') cnt++;
 			if(hor[1]) for(int i = 0; i < n; i++) if(c[1][i] == '*') cnt++;
-			if(cnt == 0) puts("0");
+			if(cnt == 0) puts("0"); //fxxk!!!!!
 			else printf("%d\n", cnt-1);
 		}
 	}
