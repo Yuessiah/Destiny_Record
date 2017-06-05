@@ -15,7 +15,7 @@ void update(int x, int val) {
 	for(int i = x; i < maxr; i+=lowbit(i)) bit[i] += val;
 }
 
-void trace(int x) {
+void access(int x) {
 	if(last[x]) {
 		int jetlag = sum(now) - sum(last[x]-1);
 		for(int i = 0; i < N; i++) {
@@ -35,12 +35,12 @@ void start() {
 		if(cmd[0] == 'A') {
 			int x;
 			scanf("%d", &x);
-			trace(x);
+			access(x);
 		}
 		if(cmd[0] == 'R') {
 			int b, y, n;
 			scanf("%d%d%d", &b, &y, &n);
-			for(int k = 0; k < n; k++) trace(b+y*k);
+			for(int k = 0; k < n; k++) access(b+y*k);
 		}
 		if(cmd[0] == 'S') {
 			for(int i = 0; i < N; i++) printf("%d%c", miss[i], i<N-1? ' ' : '\n');
