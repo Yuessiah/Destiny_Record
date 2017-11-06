@@ -7,3 +7,4 @@ https://code.google.com/codejam/past-contests --CodeJam
 https://icpcarchive.ecs.baylor.edu --ICPC  
 https://www.codechef.com --CODECHEF  
 http://acm.csie.org --NTU Online Judge  
+http://acm.hdu.edu.cn --HDU Online Judge
