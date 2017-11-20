@@ -1,16 +1,15 @@
 #include<bits/stdc++.h>
 using namespace std;
 
-const long long maxn = 1e6 + 10;
+const long long maxn = 1e5 + 10;
 
 int main()
 {
-	int n;
-	long long a[maxn], b[maxn];
+	int n, a[maxn], b[maxn];
 
 	while(~scanf("%d", &n)) {
-		for(int i = 0; i < n; i++) scanf("%l64d", &a[i]);
-		for(int i = 0; i < n; i++) scanf("%l64d", &b[i]);
+		for(int i = 0; i < n; i++) scanf("%d", &a[i]);
+		for(int i = 0; i < n; i++) scanf("%d", &b[i]);
 
 		sort(b, b+n);
 
