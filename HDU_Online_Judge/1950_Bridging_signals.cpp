@@ -6,7 +6,7 @@ int n, p[maxn], dp[maxn];
 
 int bs(int l, int r, int v) {
 	while(l < r) {
-		int m = l + (r-l >> 1);
+		int m = l + ((r-l) >> 1);
 		if(v <= dp[m]) r = m;
 		else l = m + 1;
 	}
