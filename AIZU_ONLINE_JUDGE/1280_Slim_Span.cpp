@@ -1,27 +1,25 @@
 #include<bits/stdc++.h>
 using namespace std;
 
-const int maxn = 100 + 10;
+const int maxe = 1e4 + 10;
 const int INF = 0x3f3f3f3f;
 
-struct edge { int a, b, w; };
+struct edge { int a, b, w; } G[maxe];
 
-int n, m, group[maxn];
-vector<edge> G;
+int n, m, group[maxe];
 
 bool cmp(const edge& a, const edge& b) { return a.w < b.w; }
 
 int Find(int v) { return (group[v] == v)? v : group[v] = Find(group[v]); }
-void Union(int a, int b) { group[Find(a)] = Find(b); }
+void Union(int a, int b) { group[Find(a)] = b; }
 
 
 int main()
 {
-	while(scanf("%d%d", &n, &m) && n) {
-		G.resize(m);
+	while(scanf("%d%d", &n, &m) && (n || m)) {
 		for(int i = 0; i < m; i++) scanf("%d%d%d", &G[i].a, &G[i].b, &G[i].w);
 
-		sort(G.begin(), G.end(), cmp);
+		sort(G, G+m, cmp);
 
 		int mini = INF;
 		for(int l = 0; l <= m-n+1; l++) {
