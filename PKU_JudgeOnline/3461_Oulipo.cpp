@@ -1,23 +1,25 @@
 #include<cstdio>
 #include<cstring>
-const int maxn = 1000000 + 10000 + 100;
+const int maxs = 1e6 + 10;
 
-char w[maxn], t[maxn];
-int pi[maxn];
+char w[maxs], t[maxs];
+int pi[maxs];
 
-void faliure(char p[maxn])
+void faliure()
 {
-	int m = strlen(p);
+	int m = strlen(w);
 	pi[0] = pi[1] = 0;
 
 	for(int i = 1; i < m; i++) {
 		int j = pi[i];
-		while(j && p[i] != p[j]) j = pi[j];
-		pi[i+1] = (p[i] == p[j])? j+1 : 0;
+		while(j && w[i] != w[j]) j = pi[j];
+		pi[i+1] = (w[i] == w[j])? j+1 : 0;
 	}
 
+	/*
 	for(int i = 0; i < m; i++) printf("%d ", pi[i]);
 	putchar('\n');
+	*/
 }
 
 void solve()
@@ -34,14 +36,13 @@ void solve()
 
 int main()
 {
-	scanf("%s", w);
-	faliure(w);
+	//while(scanf("%s", w)) faliure();
 	int T;
 	scanf("%d", &T);
 
 	while(T--) {
 		scanf("%s%s", w, t);
-		faliure(w);
+		faliure();
 		solve();
 	}
 
