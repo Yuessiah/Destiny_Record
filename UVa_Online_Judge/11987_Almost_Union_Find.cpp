@@ -4,7 +4,7 @@
 const int maxn = 1e5 + 10;
 
 int n, m, cmd, p, q;
-int id[maxn], group[maxn], top_n[maxn], top_s[maxn];
+int id[maxn], group[2*maxn], top_n[maxn], top_s[maxn];
 
 int Find(int u) { return (group[u] == u)? u : group[u] = Find(group[u]); }
 
