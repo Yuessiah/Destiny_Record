@@ -14,14 +14,13 @@ void dfs(int u) {
 
 	for(auto v: E[u]) {
 		if(!top[v]) dfs(v);
-		top[u] = min(top[u], top[v]);
+		top[u] = min(top[u], top[v]); // the top value is a fake, but still useful
 	}
 }
 
 int main()
 {
 	while(scanf("%d%d", &N, &M) && (N || M)) {
-		//initialization
 		memset(top, 0, sizeof(top));
 		memset(dfn, 0, sizeof(dfn));
 		vector<int> temp[maxn]; swap(E, temp);
@@ -33,7 +32,7 @@ int main()
 			if(P == 2) E[W].push_back(V);
 		}
 
-		dfs(n = 1); //calculate top value
+		dfs(n = 1); //calculate topper value
 
 		int cnt = 0;
 		for(int u = 1; u <= N; u++) if(dfn[u] == top[u]) cnt++;
