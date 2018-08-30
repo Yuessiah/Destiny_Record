@@ -44,9 +44,9 @@ int main()
 
         span.emplace(cp+one[i],     op+"0");
         span.emplace(cp+(N-one[i]), op+"1");
-
-        while(span.size() > M+1) span.pop();
       }
+
+      while(span.size() > M+1) span.pop();
     }
 
     int ans;
