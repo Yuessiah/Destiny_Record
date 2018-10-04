@@ -19,7 +19,7 @@ int main()
       string C(A.substr(i, len));
       sort(C.begin(), C.end());
 
-      for(int k = 0; k < L-(j-i-1); k++) {
+      for(int k = 0; k < L-len+1; k++) {
         string D(B.substr(k, len));
         sort(D.begin(), D.end());
 
