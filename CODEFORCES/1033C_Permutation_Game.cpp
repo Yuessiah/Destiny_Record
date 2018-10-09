@@ -16,9 +16,9 @@ int main()
   }
 
   memset(w, false, sizeof(w));
-  for(int i = n-1; i >= 1; i--) {
-    for(int m = I[i]%V[I[i]]; m <= n; m+=V[I[i]])
-      if(V[m] > V[I[i]] && !w[m]) { w[I[i]] = true; break; }
+  for(int a = n-1; a >= 1; a--) {
+    for(int m = I[a]%a; m <= n; m+=a)
+      if(V[m] > a && !w[m]) { w[I[a]] = true; break; }
   }
 
   for(int i = 1; i <= n; i++) printf("%c", w[i]? 'A' : 'B');
