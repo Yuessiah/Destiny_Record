@@ -14,16 +14,17 @@ int main()
     cnt[s[i]]++;
   }
 
+  // upper bound
   int l = 1, r = n+1;
   while(l != r) {
     int m = (l + r) / 2, c = 0;
     for(int i = 0; i < maxn; i++) c += cnt[i]/m;
     if(c >= k) l = m + 1;
     else r = m;
-  } l--; // upper bound
+  }
 
   for(int i = 0; i < maxn; i++)
-    for(int j = 0; j < cnt[i]/l && k; j++, k--) printf("%d ", i);
+    for(int j = 0; j < cnt[i]/(l-1) && k; j++, k--) printf("%d ", i);
 
   return 0;
 }
