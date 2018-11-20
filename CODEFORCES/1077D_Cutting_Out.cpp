@@ -3,15 +3,15 @@ using namespace std;
 
 int const maxn = 2e5 + 10;
 
-int n, k, s[maxn], cnt[maxn];
+int n, k, s, cnt[maxn];
 
 int main()
 {
   scanf("%d%d", &n, &k);
 
   for(int i = 0; i < n; i++) {
-    scanf("%d", &s[i]);
-    cnt[s[i]]++;
+    scanf("%d", &s);
+    cnt[s]++;
   }
 
   // upper bound
