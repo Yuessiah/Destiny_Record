@@ -1,33 +1,26 @@
 #include<cstdio>
 #include<cstring>
-const int maxn = 2e6 + 100;
 
-int n, a[maxn];
+int const bound = 100 + 10;
 
-void mergesort(int l, int r) {
-	if(r-l == 1) return;
-
-	int m = l + (r-l)/2;
-	mergesort(l, m);
-	mergesort(m, r);
-
-	int p = l, q = m, i = l, tmp[maxn];
-	while(p != m || q != r) {
-		if(p == m || (q != r && a[q] < a[p])) tmp[i++] = a[q++];
-		else tmp[i++] = a[p++];
-	}
-
-	for(i = l; i < r; i++) a[i] = tmp[i];
-}
+int n, c[bound];
 
 int main()
 {
-	while(scanf("%d", &n) && n) {
-		for(int i = 0; i < n; i++) scanf("%d", &a[i]);
+  while(scanf("%d", &n) && n) {
+    memset(c, 0, sizeof c);
 
-		mergesort(0, n);
-		for(int i = 0; i < n; i++) printf("%d%c", a[i], (i==n-1)? '\n' : ' ');
-	}
+    int age;
+    for(int i = 0; i < n; i++) {
+      scanf("%d", &age);
+      c[age]++;
+    }
 
-	return 0;
+    for(int i = 1; i < bound; i++) {
+      while(c[i]--) printf("%d%c", i, (--n)? ' ' : '\n');
+      if(!n) break;
+    }
+  }
+
+  return 0;
 }
