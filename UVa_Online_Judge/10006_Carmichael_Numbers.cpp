@@ -3,9 +3,11 @@ using namespace std;
 
 typedef long long Int;
 
-int n;
+int const maxn = 65535;
 
-Int exp(Int a, int m) {
+bool car[maxn];
+
+Int exp(Int a, int m, int n) {
   Int x = 1;
 
   while(m) {
@@ -17,23 +19,22 @@ Int exp(Int a, int m) {
   return x;
 }
 
-bool is_prime(int n) {
-  for(int i = 2; i*i <= n; i++)
-    if(!(n%i)) return false;
-  return true;
-}
-
 int main()
 {
+  memset(car, false, sizeof car);
+
+  for(Int i = 2; i < maxn; i++) {
+    if(car[i]) continue;
+    for(Int j = i*i; j < maxn; j+=i) car[j] = true;
+  }
+
+  for(int n = 2; n < maxn; n++)
+    for(Int a = 2; a <= n-1 && car[n]; a++)
+      if(exp(a, n, n) != a) car[n] = false;
+
+  int n;
   while(scanf("%d", &n) && n) {
-    bool car = true;
-
-    if(is_prime(n)) car = false;
-
-    for(Int a = 2; a <= n-1 && car; a++)
-      if(exp(a, n) != a) car = false;
-
-    if(car) printf("The number %d is a Carmichael number.\n", n);
+    if(car[n]) printf("The number %d is a Carmichael number.\n", n);
     else printf("%d is normal.\n", n);
   }
 
