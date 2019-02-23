@@ -1,63 +1,61 @@
-#include<stdio.h>
-#include<string.h>
-const int maxn = 10;
+#include<cstdio>
 
-int r, c;
-char puz[maxn+10][maxn+10];
-int flag[maxn+10][maxn+10];
+int const maxn = 20;
 
-void across_print()
-{
-	int ok = 1;
-	for(int i = 0; i < r; i++) {
-		int p = 0;
-		while(p < c) {
-			if((!p || puz[i][p-1] == '*') && puz[i][p] != '*') printf("\n%3d.", flag[i][p]);
-			if(puz[i][p] != '*') putchar(puz[i][p]);
-			p++;
-		}
-	}
-	putchar('\n');
+int r, c, flag[maxn][maxn];
+char puz[maxn][maxn];
+
+bool across_head(int i, int j)
+  { return !j || puz[i][j-1] == '*'; }
+
+bool down_head(int i, int j)
+  { return !i || puz[i-1][j] == '*'; }
+
+void across_print() {
+  for(int i = 0; i < r; i++)
+    for(int j = 0; j < c; j++) {
+      if(across_head(i, j) && puz[i][j] != '*') printf("\n%3d.", flag[i][j]);
+      if(puz[i][j] != '*') putchar(puz[i][j]);
+    }
 }
 
-void down_print()
-{
-	for(int i = 0; i < r; i++) {
-		int p = 0;
-		while(p < c) {
-			if((!i || puz[i-1][p] == '*') && puz[i][p] != '*') {
-				printf("\n%3d.", flag[i][p]);
-				int j = i;
-				while(puz[j][p] != '*' && j < r) putchar(puz[j++][p]);
-			}
-			p++;
-		}
-	}
-	putchar('\n');
+void down_print() {
+  for(int i = 0; i < r; i++)
+    for(int j = 0; j < c; j++)
+      if(down_head(i, j) && puz[i][j] != '*') {
+        printf("\n%3d.", flag[i][j]);
+        for(int k = i; puz[k][j] != '*' && k < r; k++) putchar(puz[k][j]);
+      }
 }
 
-void input()
-{
-	int n = 0;
-	for(int i = 0; i < r; i++) {
-		scanf("%s", puz[i]);
-		for(int j = 0; j < c; j++) 
-			if((!i || !j || puz[i-1][j] == '*' || puz[i][j-1] == '*') && puz[i][j] != '*') flag[i][j] = ++n;
-	}
-}
+bool flag_position(int i, int j)
+  { return (across_head(i, j) || down_head(i, j)) && puz[i][j] != '*'; }
 
 int main()
 {
-	int kase = 0;
-	while(scanf("%d%d", &r, &c) && r) {
-		memset(flag, 0, sizeof(flag));
-		input();
+  int kase = 0;
+  while(scanf("%d%d", &r, &c) && r) {
+    for(int i = 0; i < r; i++) scanf("%s", puz[i]);
 
-		if(kase) putchar('\n');
-		printf("puzzle #%d:\n", ++kase);
-		printf("Across"); across_print();
-		printf("Down"); down_print();
-	}
+    //preprocess
+    int n = 0;
+    for(int i = 0; i < r; i++)
+      for(int j = 0; j < c; j++)
+        if(flag_position(i, j)) flag[i][j] = ++n;
+        else flag[i][j] = 0;
 
-	return 0;
+    //print answer
+    if(kase) putchar('\n');
+    printf("puzzle #%d:\n", ++kase);
+
+    printf("Across");
+    across_print();
+    putchar('\n');
+
+    printf("Down");
+    down_print();
+    putchar('\n');
+  }
+
+  return 0;
 }

@@ -4,70 +4,67 @@
 using namespace std;
 const int maxn = 26;
 
-int n, pos[maxn];
+int n, pos[maxn]; // pos := position
 vector<int> pile[maxn];
 
-int find_height(int obj, int p)
-{
-	int i = 0;
-	for(; i < pile[p].size() && pile[p][i] != obj; i++);
-	return i + 1;
+int height(int obj) {
+  int i = 0, p = pos[obj];
+  for(; pile[p][i] != obj; i++);
+
+  return i + 1;
 }
 
-void restore_above(int p, int h)
-{
-	int top = pile[p].size();
-	for(int i = h; i < top; i++) {
-		int blc = pile[p][i];
-		pos[blc] = blc;
-		pile[blc].push_back(blc);
-	}
-	pile[p].resize(h);
+void return_above(int obj) {
+  int p = pos[obj], h = height(obj);
+
+  for(int i = h; i < pile[p].size(); i++) {
+    int w = pile[p][i]; // w := wood
+    pile[w].push_back(w);
+    pos[w] = w;
+  }
+
+  pile[p].resize(h);
 }
 
-void move_to(int ap, int ah, int bp, int bh)
-{
-	int top = pile[ap].size();
-	for(int i = ah-1; i < top; i++) {
-		int blc = pile[ap][i];
-		pile[bp].push_back(blc);
-		pos[blc] = bp;
-	}
-	pile[ap].resize(ah-1);
-}
+void move_to(int a, int b) {
+  int ap = pos[a], bp = pos[b];
+  int ah = height(a);
 
-void output()
-{
-	for(int i = 0; i < n; i++) {
-		cout << i << ":";
-		int len = pile[i].size();
-		if(len) for(int j = 0; j < len; j++)
-			cout << " " << pile[i][j];
-		cout << endl;
-	}
+  for(int i = ah-1; i < pile[ap].size(); i++) {
+    int w = pile[ap][i]; // w := wood
+    pile[bp].push_back(w);
+    pos[w] = bp;
+  }
+
+  pile[ap].resize(ah-1);
 }
 
 int main()
 {
-	cin >> n;
-	for(int i = 0; i < n; i++) {
-		pos[i] = i;
-		pile[i].push_back(i);
-	}
+  cin >> n;
+  for(int i = 0; i < n; i++) {
+    pos[i] = i;
+    pile[i].push_back(i);
+  }
 
-	string c1, c2;
-	int a, b;
-	while(cin >> c1 >> a >> c2 >> b) {
-		if(pos[a] == pos[b]) continue;
+  int a, b;
+  string c1, c2;
+  while(cin >> c1 && c1 != "quit") {
+    cin >> a >> c2 >> b;
 
-		int ah = find_height(a, pos[a]);
-		int bh = find_height(b, pos[b]);
-		if(c1 == "move") restore_above(pos[a], ah);
-		if(c2 == "onto") restore_above(pos[b], bh);
-		move_to(pos[a], ah, pos[b], bh);
-	}
+    if(pos[a] == pos[b]) continue;
 
-	output();
+    if(c1 == "move") return_above(a);
+    if(c2 == "onto") return_above(b);
+    move_to(a, b);
+  }
 
-	return 0;
+  // output
+  for(int i = 0; i < n; i++) {
+    cout << i << ":";
+    for(int j = 0; j < pile[i].size(); j++) cout << " " << pile[i][j];
+    cout << endl;
+  }
+
+  return 0;
 }
