@@ -46,7 +46,7 @@ int main()
   memset(vis, false, sizeof vis);
   dfs(r2, c2, land2);
 
-  int cost = 50*50*2;
+  int cost = maxn*maxn*2;
   for(int i = 0; i < land1.size(); i++)
     for(int j = 0; j < land2.size(); j++)
       cost = min(cost, dis(land1[i], land2[j]));
