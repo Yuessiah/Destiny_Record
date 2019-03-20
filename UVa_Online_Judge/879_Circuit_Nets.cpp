@@ -1,40 +1,44 @@
-#include<cstdio>
-#include<iostream>
-#include<sstream>
-#include<string>
+#include<bits/stdc++.h>
 using namespace std;
 
-const int maxn = 65535, maxs = 1e3;
+const int maxn = 65535;
 
 int N, group[maxn];
 
 int Find(int u) { return (u == group[u])? u : group[u] = Find(group[u]); }
+void Union(int u, int v) { group[Find(u)] = Find(v); }
 
 int main()
 {
-	int T;
-	scanf("%d", &T);
-	getchar(); getchar();
+  /*
+  ios::sync_with_stdio(false);
+  cin.tie(0);
+  */
 
-	while(T--) {
-		for(int i = 1; i <= maxn; i++) group[i] = i;
-		scanf("%d", &N);
-		getchar();
+  int T;
+  cin >> T;
 
-		int u, v;
-		char input[maxs];
-		while(fgets(input, maxs, stdin) != NULL) {
-			if(input[0] == '\n') break;
-			stringstream sin(input);
-			while(sin >> u >> v) group[Find(u)] = Find(v);
-		}
+  while(T--) {
+    cin >> N;
+    for(int i = 1; i <= N; i++) group[i] = i;
 
+    int u, v;
+    string pins;
 
-		int cnt = 0;
-		for(int i = 1; i <= N; i++) if(Find(i) == i) cnt++;
-		printf("%d\n", cnt);
-		if(T) putchar('\n');
-	}
+    cin.ignore();
+    while(getline(cin, pins)) {
+      if(pins.empty()) break;
 
-	return 0;
+      stringstream sin(pins);
+      while(sin >> u >> v) Union(u, v);
+    }
+
+    int cnt = 0;
+    for(int i = 1; i <= N; i++) if(Find(i) == i) cnt++;
+
+    cout << cnt << '\n';
+    if(T) cout << endl;
+  }
+
+  return 0;
 }
