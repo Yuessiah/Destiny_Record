@@ -6,20 +6,22 @@ typedef long long Int;
 int const maxn = 1e5 + 10;
 
 int n;
-struct student { Int a, b; } s[maxn];
-
-bool cmp(student const &x, student const &y)
-  { return (x.a-y.a) + (y.b-x.b) > 0; }
+Int a, b, c[maxn];
 
 int main()
 {
   scanf("%d", &n);
-  for(int i = 0; i < n; i++) scanf("%lld%lld", &s[i].a, &s[i].b);
 
-  sort(s, s+n, cmp);
-
+  /* a*(j-1) + b*(n-j) = (a-b)*j + b*n - a */
   Int sum = 0;
-  for(int i = 0; i < n; i++) sum += s[i].a * i + s[i].b * (n-(i+1));
+  for(int i = 0; i < n; i++) {
+    scanf("%lld%lld", &a, &b);
+    sum += b*n - a;
+    c[i] = a - b;
+  }
+
+  sort(c, c+n);
+  for(int i = 0; i < n; i++) sum += c[i] * (n-i);
 
   printf("%lld\n", sum);
 
