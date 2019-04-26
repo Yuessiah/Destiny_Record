@@ -1,67 +1,52 @@
-#include<cstdio>
-#include<cstring>
-#include<cmath>
-#include<algorithm>
-#include<vector>
+#include<bits/stdc++.h>
 using namespace std;
-const int maxp = 1e4/2 + 100;
 
-struct coordinate {
-	double x, y;
-}C[maxp];
+int const maxp = 510;
 
-struct edge {
-	int a, b;
-	double d;
-	edge(int a=0, int b=0, double d=0): a(a), b(b), d(d){}
-}E[(1+maxp)*(maxp>>1)];
-
-vector<double> D;
+struct edge { int u, v; double dist; };
+struct point { double x, y; } C[maxp];
 int S, P, k, group[maxp];
 
-void init() {
-	k = 0;
-	D.clear();
+double dist(point u, point v) {
+  double x = u.x - v.x, y = u.y - v.y;
+  return sqrt(x*x + y*y);
 }
 
-bool cmp(const edge& A, const edge& B) { return A.d < B.d; }
+int Find(int u)
+  { return (group[u] == u)? u : group[u] = Find(group[u]); }
 
-double dist(double x1, double y1, double x2, double y2) {
-	double x = x1 - x2, y = y1 - y2;
-	return sqrt(x*x + y*y);
-}
-
-int find_set(int e) {
-	if(group[e] == e) return e;
-	return group[e] = find_set(group[e]);
-}
-
-void union_set(int a, int b) { group[find_set(a)] = find_set(b); }
+void Union(int a, int b)
+  { group[Find(a)] = Find(b); }
 
 int main()
 {
-	int N;
-	scanf("%d", &N);
+  int N;
+  scanf("%d", &N);
 
-	while(N--) {
-		init();
+  while(N--) {
+    scanf("%d%d", &S, &P);
 
-		scanf("%d%d", &S, &P);
-		for(int i = 0; i < P; i++) {
-			group[i] = i;
+    vector<edge> E;
+    for(int i = 0; i < P; i++) {
+      group[i] = i;
 
-			scanf("%lf%lf", &C[i].x, &C[i].y);
-			for(int j = 0; j < i; j++) E[k++] = edge(j, i, dist(C[i].x, C[i].y, C[j].x, C[j].y));
-		}
+      scanf("%lf%lf", &C[i].x, &C[i].y);
+      for(int j = 0; j < i; j++) E.push_back({j, i, dist(C[i], C[j])});
+    }
 
-		sort(E, E+k, cmp);
-		for(int i = 0; i < k; i++) if(find_set(E[i].a) != find_set(E[i].b)) {
-			union_set(E[i].a, E[i].b);
-			D.push_back(E[i].d);
-		}
-		reverse(D.rbegin(), D.rend());
-		printf("%.2lf\n", D[S-1]);
-	}
+    sort(E.begin(), E.end(), [&](edge A, edge B) { return A.dist < B.dist; });
 
-	return 0;
+    vector<double> D;
+    for(edge e: E) {
+      int a = Find(e.u), b = Find(e.v);
+      if(a != b) {
+        D.push_back(e.dist);
+        Union(e.u, e.v);
+      }
+    }
+
+    printf("%.2lf\n", D[P-S-1]);
+  }
+
+  return 0;
 }

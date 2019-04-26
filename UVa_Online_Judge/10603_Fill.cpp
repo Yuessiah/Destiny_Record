@@ -1,76 +1,67 @@
-#include<cstdio>
-#include<cstring>
-#include<algorithm>
-#include<queue>
+#include<bits/stdc++.h>
 using namespace std;
 
-const int maxn = 200 + 5;
+int const maxd = 210;
+int const INF = 0x3f3f3f3f;
 
-int cap[3], x;
-int vis[maxn][maxn], ans[maxn];
-
-struct Node {
-	int v[3], dist;
-	Node(int a=0, int b=0, int c=0, int dist=0) {
-		v[0] = a; v[1] = b; v[2] = c;
-		this->dist = dist;
-	}
-	bool operator<(const Node& rhs) const {
-		return dist > rhs.dist;
-	}
+struct node {
+  int j[3], total; // j := jug
+  bool operator<(node const &rhs) const
+    { return total > rhs.total; }
 };
 
-void update_ans(const Node& u)
-{
-	for(int i = 0; i < 3; i++) {
-		int d = u.v[i];
-		if(ans[d] == -1 || ans[d] > u.dist) ans[d] = u.dist;
-	}
-}
+int v[3], d, ans[maxd];
+bool vis[maxd][maxd];
 
-void bfs()
-{
-	priority_queue<Node> q;
-	Node start(0, 0, cap[2], 0);
-	vis[0][0] = 1;
-	q.push(start);
-
-	while(!q.empty()) {
-		Node u = q.top(); q.pop();
-		update_ans(u);
-		if(ans[x] >= 0) return;
-
-		for(int i = 0; i < 3; i++) for(int j = 0; j < 3; j++) if(i != j) {
-			int amount = min(u.v[i], cap[j]-u.v[j]);
-			Node v; memcpy(&v, &u, sizeof(u));
-			v.v[i] -= amount;
-			v.v[j] += amount;
-			v.dist += amount;
-			if(!vis[v.v[0]][v.v[1]]) {
-				vis[v.v[0]][v.v[1]] = 1;
-				q.push(v);
-			}
-		}
-	}
+void update_ans(node n) {
+  for(int i = 0; i < 3; i++)
+    ans[n.j[i]] = min(ans[n.j[i]], n.total);
 }
 
 int main()
 {
-	int T;
-	scanf("%d", &T);
-	while(T--) {
-		scanf("%d%d%d%d", cap, cap+1, cap+2, &x);
-		memset(vis,  0, sizeof(vis));
-		memset(ans, -1, sizeof(ans));
+  int T;
+  scanf("%d", &T);
 
-		bfs();
-		do {
-			if(ans[x] >= 0) {
-				printf("%d %d\n", ans[x], x);
-				break;
-			}
-		}while(x--);
-	}
+  while(T--) {
+    scanf("%d%d%d%d", &v[0], &v[1], &v[2], &d); // a, b, c volume
 
-	return 0;
+    memset(vis, false, sizeof vis);
+    memset(ans, 0x3f, sizeof ans);
+    ans[0] = 0;
+    priority_queue<node> PQ;
+    PQ.push({0, 0, v[2], 0}); //root
+
+    while(!PQ.empty()) {
+      node u = PQ.top(); PQ.pop();
+
+      update_ans(u);
+      if(ans[d] != INF) break;
+
+      if(vis[u.j[0]][u.j[1]]) continue;
+      vis[u.j[0]][u.j[1]] = true;
+
+      for(int s = 0; s < 3; s++)
+        for(int t = 0; t < 3; t++) {
+          if(s == t) continue;
+          int pour = min(u.j[s], v[t] - u.j[t]);
+
+          node v = u;
+          v.j[s] -= pour;
+          v.j[t] += pour;
+          v.total += pour;
+
+          if(vis[v.j[0]][v.j[1]]) continue;
+          PQ.push(v);
+        }
+    }
+
+    for(int _d = d; _d >= 0; _d--)
+      if(ans[_d] != INF) {
+        printf("%d %d\n", ans[_d], _d);
+        break;
+      }
+  }
+
+  return 0;
 }
