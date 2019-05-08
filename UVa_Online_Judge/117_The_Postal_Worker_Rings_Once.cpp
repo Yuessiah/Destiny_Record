@@ -17,7 +17,8 @@ int main()
     while(cin >> s && s != "deadend") {
       int u = s.front() - 'a', v = s.back()  - 'a';
 
-      G[u][v] = G[v][u] = min(G[v][u], dist += s.length());
+      dist += s.length();
+      G[u][v] = G[v][u] = min(G[v][u], (int)s.length());
       deg[u]++, deg[v]++;
     }
     if(cin.eof()) return 0;
