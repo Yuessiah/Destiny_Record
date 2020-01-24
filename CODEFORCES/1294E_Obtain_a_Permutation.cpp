@@ -10,14 +10,14 @@ int main()
   a.assign(n, vector<int>(m));
 
   for(int i = 0; i < n; i++)
-    for(int j = 0; j < m; j++) scanf("%d", &a[i][j]);
+    for(int j = 0; j < m; j++) scanf("%d", &a[i][j]), a[i][j]--;
 
   int ans = 0;
   for(int j = 0; j < m; j++) {
     vector<int> cnt(n, 0);
     for(int i = 0; i < n; i++) {
-      if((a[i][j]-1)%m != j || (a[i][j]-1)/m > n) continue;
-      cnt[(i-(a[i][j]-1)/m + n) % n]++;
+      if(a[i][j]%m != j || a[i][j]/m >= n) continue;
+      cnt[(i-a[i][j]/m + n) % n]++;
     }
 
     int best = n;
