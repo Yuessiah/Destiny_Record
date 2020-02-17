@@ -1,4 +1,6 @@
-# Destiny_Record
+# DESTINY RECORD
+
+![](https://imgur.com/FHdD89Z.png)
 
 http://sprout.csie.org/oj --Test Online Judge  
 https://uva.onlinejudge.org --UVa Online Judge  
