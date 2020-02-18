@@ -37,10 +37,8 @@ int main()
       else r = k2;
     }
 
-    int k = l, best = m(l);
-    for(int k1 = l; k1 <= r; k1++)
-      if(best > m(k1)) k = k1, best = m(k1);
-    printf("%d %d\n", m(k), k);
+    if(m(l) < m(l+1)) printf("%d %d\n", m(l), l);
+    else printf("%d %d\n", m(l+1), l+1);
   }
 
   return 0;
