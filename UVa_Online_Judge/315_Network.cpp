@@ -9,13 +9,13 @@ const int maxn = 100 + 10;
 int n, lvl[maxn], top[maxn], E[maxn][maxn];
 set<int> AP;
 
-void dfs(int p, int u, int d) {
+void dfs(int u, int d) {
 	lvl[u] = top[u] = d + 1;
 	int c = 0;
 
-	for(int v = 1; v <= n; v++) if(E[u][v] && v != p) {
+	for(int v = 1; v <= n; v++) if(E[u][v]) {
 		if(!lvl[v]) {
-			c++, dfs(u, v, d+1);
+			c++, dfs(v, d+1);
 			if(d && top[v] >= lvl[u]) AP.insert(u);
 			else top[u] = min(top[u], top[v]);
 		} else top[u] = min(top[u], lvl[v]);
@@ -40,9 +40,10 @@ int main()
 		while(scanf("%d", &u) && u)
 			while(scanf(" %d%c", &v, &c) && (E[u][v] = E[v][u] = 1) && c != '\n');
 
-		for(int i = 1; i <= n; i++) if(!lvl[i]) dfs(i, i, 0);
+		for(int i = 1; i <= n; i++) if(!lvl[i]) dfs(i, 0);
 		printf("%d\n", AP.size());
 	}
 
 	return 0;
 }
+
