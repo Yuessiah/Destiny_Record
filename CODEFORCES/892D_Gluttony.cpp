@@ -13,7 +13,7 @@ int main()
 
   for(int i = 0; i < n; i++) {
     int p = lower_bound(c, c+n, a[i]) - c;
-    cout << c[(p-1+n)%n] << ' ';
+    cout << c[(p+1)%n] << ' ';
   }
   cout << endl;
 

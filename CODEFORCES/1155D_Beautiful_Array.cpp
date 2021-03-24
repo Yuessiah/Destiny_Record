@@ -1,27 +1,27 @@
 #include<bits/stdc++.h>
 using namespace std;
+typedef long long Int;
 
-int const maxn = 3e5 + 10;
+int constexpr maxn = 3e5 + 10;
 
 int n, x;
-long long a[maxn];
+Int a[maxn];
 
 int main()
 {
-  scanf("%d%d", &n, &x);
+  cin >> n >> x;
 
-  long long best = 0, dp[maxn][3] = {};
-  for(int r = 1; r <= n; r++) {
-    scanf("%lld", &a[r]);
+  Int dp[3] {}, best = 0;
+  for(int i = 0; i < n; i++) {
+    cin >> a[i];
+    dp[2] = max({dp[1] + 1*a[i], dp[2] + 1*a[i], 1*a[i]});
+    dp[1] = max({dp[0] + x*a[i], dp[1] + x*a[i], x*a[i]});
+    dp[0] = max({dp[0] + 1*a[i], 1*a[i]});
 
-    dp[r][0] = max(dp[r-1][0] + a[r], a[r]);
-    dp[r][1] = max(dp[r-1][0] + a[r]*x, max(dp[r-1][1] + a[r]*x, a[r]*x));
-    dp[r][2] = max(dp[r-1][1] + a[r], max(dp[r-1][2] + a[r], a[r]));
-
-    best = max(best, max(dp[r][0], max(dp[r][1], dp[r][2])));
+    best = max({best, dp[0], dp[1], dp[2]});
   }
 
-  printf("%lld\n", best);
+  cout << best << endl;
 
   return 0;
 }
